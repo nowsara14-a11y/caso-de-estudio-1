@@ -6,9 +6,9 @@ USE registro_personal_db;
 
 CREATE TABLE IF NOT EXISTS personal (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(80) NOT NULL,
-    apellido VARCHAR(80) NOT NULL,
-    telefono VARCHAR(20) NOT NULL,
+    nombre VARCHAR(100) NOT NULL,
+    apellido VARCHAR(100) NOT NULL,
+    telefono VARCHAR(25) NOT NULL,
     email VARCHAR(120) NOT NULL,
     direccion TEXT NOT NULL
 );

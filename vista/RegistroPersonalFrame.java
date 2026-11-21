@@ -1,4 +1,4 @@
-package vista
+package vista;
 
 import dao.PersonaDAO;
 import modelo.Persona;
@@ -7,29 +7,30 @@ import javax.swing.*;
 import java.awt.*;
 
 public class RegistroPersonalFrame extends JFrame {
-    private JTextField txtNombre = new JTextField();
-    private JTextField txtApellido = new JTextField();
-    private JTextField txtTelefono = new JTextField();
-    private JTextField txtEmail = new JTextField();
-    private JTextField txtDireccion = new JTextField();
-    private PersonaDAO personaDAO = new PersonaDAO();
+    private final JTextField txtNombre = new JTextField();
+    private final JTextField txtApellido = new JTextField();
+    private final JTextField txtTelefono = new JTextField();
+    private final JTextField txtEmail = new JTextField();
+    private final JTextArea txtDireccion = new JTextArea(3, 20);
+    private final PersonaDAO personaDAO = new PersonaDAO();
 
     public RegistroPersonalFrame() {
         setTitle("Registro de Personal");
         setSize(540, 560);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
+        initUI();
     }
-    
+
     private void initUI() {
-            JPanel mainPanel = new JPanel(new BorderLayout(15, 15));
-            mainPanel.setBorder(BorderFactory.createEmptyBorder(20, 25, 20, 25));
+        JPanel mainPanel = new JPanel(new BorderLayout(15, 15));
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(20, 25, 20, 25));
 
-            JLabel lblTitulo = new JLabel("Registro de Personal", SwingConstants.CENTER);
-            lblTitulo.setFont(new Font("SansSerif", Font.PLAIN, 28));
-            mainPanel.add(lblTitulo, BorderLayout.NORTH);
+        JLabel lblTitulo = new JLabel("Registro de Personal", SwingConstants.CENTER);
+        lblTitulo.setFont(new Font("SansSerif", Font.PLAIN, 28));
+        mainPanel.add(lblTitulo, BorderLayout.NORTH);
 
-            JPanel formPanel = new JPanel(new GridLayout(2, 2, 18, 12));
+        JPanel formPanel = new JPanel(new GridLayout(2, 2, 18, 12));
         formPanel.add(crearBloqueCampo("Nombre", txtNombre));
         formPanel.add(crearBloqueCampo("Apellido", txtApellido));
         formPanel.add(crearBloqueCampo("Telefono", txtTelefono));
@@ -75,11 +76,11 @@ public class RegistroPersonalFrame extends JFrame {
     }
 
     private void registrarPersona() {
-        String nombre = txtNombre.getText();
-        String apellido = txtApellido.getText();
-        String telefono = txtTelefono.getText();
-        String email = txtEmail.getText();
-        String direccion = txtDireccion.getText();
+        String nombre = txtNombre.getText().trim();
+        String apellido = txtApellido.getText().trim();
+        String telefono = txtTelefono.getText().trim();
+        String email = txtEmail.getText().trim();
+        String direccion = txtDireccion.getText().trim();
 
         if (!Validaciones.validarFormulario(this, nombre, apellido, telefono, email, direccion)) {
             return;
@@ -87,10 +88,20 @@ public class RegistroPersonalFrame extends JFrame {
 
         Persona nueva = new Persona(nombre, apellido, telefono, email, direccion);
         if (personaDAO.insertar(nueva)) {
-            JOptionPane.showMessageDialog(this, "Registro insertado correctamente en la base de datos.", "Notificación", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Registro insertado correctamente en la base de datos.",
+                    "Notificación",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
             limpiarCampos();
         } else {
-            JOptionPane.showMessageDialog(this, "No se pudo insertar el registro.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(
+                    this,
+                    "No se pudo insertar el registro.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
         }
     }
 
